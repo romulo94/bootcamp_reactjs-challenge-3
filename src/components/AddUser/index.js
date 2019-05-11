@@ -25,9 +25,9 @@ class AddUser extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // const { loading } = this.props;
+    const { loading } = this.props;
 
-    // if (loading) return;
+    if (loading) return;
 
     const { userInput } = this.state;
 
@@ -43,7 +43,7 @@ class AddUser extends Component {
   };
 
   render() {
-    const { modal, hideModal } = this.props;
+    const { modal, hideModal, loading } = this.props;
     const { userInput } = this.state;
     return (
       <Modal
@@ -54,12 +54,6 @@ class AddUser extends Component {
         overlayClassName="modal-overlay"
       >
         <h2>Adicionar novo usuário</h2>
-        {modal.cordinates !== null ? (
-          <>
-            <p>{modal.cordinates.latitude}</p>
-            <p>{modal.cordinates.longitude}</p>
-          </>
-        ) : null}
         <form action="" onSubmit={this.handleFormSubmit}>
           <input
             value={userInput}
@@ -67,10 +61,14 @@ class AddUser extends Component {
             type="text"
             onChange={e => this.setState({ userInput: e.target.value })}
           />
-          <button type="submit">Salvar</button>
-          <button onClick={this.handleHideModal} type="button">
-            Cancelar
-          </button>
+          <div className="buttons-actions">
+            <button className="cancel" onClick={this.handleHideModal} type="button">
+              Cancelar
+            </button>
+            <button className="save" type="submit">
+              {loading ? <i className="fa fa-spinner fa-pulse" /> : 'Salvar'}
+            </button>
+          </div>
         </form>
       </Modal>
     );
